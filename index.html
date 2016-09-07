@@ -1,58 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link type="text/css" rel="stylesheet" href="https://docs.handsontable.com/pro/1.5.0/bower_components/handsontable-pro/dist/handsontable.full.min.css">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script>
+          function onOAuthCallback() {
+            var authInfo = getOAuthInfoFromUrl();
+            var token = authInfo["access_token"];
+            window.opener.onAuthenticated(token);
+            window.close();
+          }
 
-<script src="https://docs.handsontable.com/pro/1.5.0/bower_components/handsontable-pro/dist/handsontable.full.min.js"></script>
+          function getOAuthInfoFromUrl() {
+            if (window.location.hash) {
+              var authResponse = window.location.hash.substring(1);
+              var authInfo = JSON.parse(
+                '{"' + authResponse.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                function(key, value) { return key === "" ? value : decodeURIComponent(value); });
+              return authInfo;
+            } else {
+              alert("An error occurred while getting access token");
+            }
+          }
 
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-  var
-    data1 = [
-      ['', 'Kia', 'Nissan', 'Toyota', 'Honda', 'Mazda', 'Ford'],
-      ['2012', 10, 11, 12, 13, 15, 16],
-      ['2013', 10, 11, 12, 13, 15, 16],
-      ['2014', 10, 11, 12, 13, 15, 16],
-      ['2015', 10, 11, 12, 13, 15, 16],
-      ['2016', 10, 11, 12, 13, 15, 16]
-    ],
-    container1 = document.getElementById('example1'),
-    settings1 = {
-      data: data1
-    },
-    hot1;
-  
-  hot1 = new Handsontable(container1, settings1);
-  data1[0][1] = 'Ford'; // change "Kia" to "Ford" programmatically
-  hot1.render();
-  
-  function bindDumpButton() {
-      if (typeof Handsontable === "undefined") {
-        return;
-      }
-  
-      Handsontable.Dom.addEvent(document.body, 'click', function (e) {
-  
-        var element = e.target || e.srcElement;
-  
-        if (element.nodeName == "BUTTON" && element.name == 'dump') {
-          var name = element.getAttribute('data-dump');
-          var instance = element.getAttribute('data-instance');
-          var hot = window[instance];
-          console.log('data of ' + name, hot.getData());
-        }
-      });
-    }
-  bindDumpButton();
-
-});
-</script>
-</head>
-<body>
-<div id="example1" class="hot handsontable"></div>
-
-
-</body>
+          onOAuthCallback();
+        </script>
+    </body>
 </html>
