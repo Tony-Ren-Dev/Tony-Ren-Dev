@@ -1,6 +1,6 @@
 'use strict';
 
-import Api from './api';
+import Api from 'src/api';
 import PickerView from './picker-view';
 import extend from 'extend';
 import Promise from './deps/promise';
