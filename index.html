@@ -124,7 +124,8 @@
     <script type="text/javascript">
       function openPicker() {
         getToken().then(function(token) {
-          return new OneDriveFilePicker({ 'accessToken': token }).select();
+          var baseURL = 'https://tonyren-my.sharepoint.com/_api/v2.0';
+          return new OneDriveFilePicker({ 'accessToken': token, 'baseURL': baseURL }).select();
         }).then(function(result) {
           $("#result .action span.data").html(result.action);
           $("#result .filename span.data").html('');
