@@ -1,4 +1,4 @@
-var appInfo = { clientId: '000000004C179FFB', scopes: 'onedrive.readonly wl.signin', redirectUri: 'https://localhost:5000/callback.html'}
+var appInfo = { clientId: '8b68c952-9dce-423f-a69b-79499a127735', scopes: 'onedrive.readonly wl.signin', redirectUri: 'https://tony-ren-dev.github.io/callback.html'}
 var tmpResolve = null;
 
 function getToken() {
