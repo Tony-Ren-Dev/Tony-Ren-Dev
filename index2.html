@@ -201,13 +201,14 @@
                     
                     
                      jQuery.ajax({
-                        url: "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename.png:/content",
+                        url: "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename33.png:/content",
                         type: 'PUT',
                         data:bdinputfile,
                         beforeSend: function beforeSend(xhr) {
                           xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                         },
                         success: function success(data) {
+                            console.log('OK');
                            console.log(data);
                         },
                         error: function error(jqXHR, textStatus, errorThrown) {
