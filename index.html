@@ -1,144 +1,172 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
-    <script type="text/javascript" src="oauth.js"></script>
-    <script type="text/javascript" src="./src/onedrive-file-picker.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Tony-Ren-Dev/Tony-Ren-Dev.github.io/master/src/styles/onedrive-file-pricker.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <style>
-      html, body {
-        height: 100%;
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>O365 CORS Sample</title>
+    <style> 
+      body { 
+        font-family:'Segoe UI'; 
+      } 
+
+      .paddedElement {
+        margin-top: 5px; 
       }
-      body {
-        font-family: 'Open Sans', Arial, sans-serif;
-        background-color: #f4fbfe;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
-        margin-bottom: 3em;
-        width:50%;
-        min-width: 540px;
-        margin: 0 auto;
-        min-height: 65vh;
-      }
-      .header {
-        background-color: #294a6b;
-        color: white;
-        font-size: 130%;
-        padding: .6em 2em .3em;
-      }
-      h3 {
-        font-weight: 300;
-        font-size: 1.5em;
-        margin: .5em 0 .8em;
-      }
-      .content {
-        padding: 2em 2em 0;
-        position: relative;
-        color: #34567b;
-        min-height: 60vh;
-      }
-      .text-center {
-        text-align: center;
-      }
-      .button {
-        background: #00adff;
-        color: #fff;
-        border: none;
-        padding: 1em;
-        transition: all .2s ease-in-out;
-      }
-      .button:hover {
-        background-color: #0079b3;
-        cursor: pointer;
-      }
-      .header .button {
-        font-size: .7em;
-        font-weight: bold;
-        background-color: #ef4800;
-        text-transform: uppercase;
-        box-shadow: 0 0 5px rgba(0,0,0,0.35);
-        border-radius: 2px;
-      }
-      .header .button:hover {
-        background-color: #dd1c00;
-      }
-      .margin-bottom {
-        margin-bottom: 20px;
-      }
-      .metadata pre {
-        overflow: auto;
-        background-color: #fff;
-        border: 1px solid #cbddf0;
-        border-radius: 3px;
-        padding: .5em;
-        color: #213f7D;
-      }
-      .title {
-        width: 7em;
-        display: inline-block;
-        line-height: 1.9em;
-        color: #1e2538;
-      }
-      .team {
-        margin-bottom: 1em;
-        font-size: .8em;
-        text-align: center;
-      }
-      a, a:visited {
-        color: #00adff;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      @media (max-width:1020px) {
-        .container {
-          margin: 0;
-          width: auto;
-        }
+
+      .hidden {
+        visibility: hidden; 
       }
     </style>
   </head>
   <body>
-    <div class="header text-center">
-      <h3>OneDrive JavaScript File Picker</h3>
-      <div class="margin-bottom text-center">
-        <input class="odfp-button button" type="submit" onclick="openPicker()" value="Open Picker »"/>
-      </div>
-    </div>
-    <div class="container">
-      <div class="content">
-        <div id="result">
-          <div class="action"><span class="title">User action</span><span class="data"></span></div>
-          <div class="filename"><span class="title">Filename</span><span class="data"></span></div>
-          <div class="metadata"><pre class="prettyprint" style="display:none;"></pre></div>
-        </div>
-      </div>
-      <div class="team">developed by the <a href="www.nuxeo.com/" alt="nuxeo.com">nuxeo team</a></div>
-    </div>
-
-    <script type="text/javascript">
-      function openPicker() {
-        getToken().then(function(token) {
-          var baseURL = 'https://tonyren-my.sharepoint.com/_api/v2.0';
-          return new OneDriveFilePicker({ 'accessToken': token, 'baseURL': baseURL }).select();
-        }).then(function(result) {
-          $("#result .action span.data").html(result.action);
-          $("#result .filename span.data").html('');
-          $('#result .metadata pre').html('');
-          $('#result .metadata pre').hide();
-          if (result.action === 'select') {
-            $("#result .filename span.data").html(result.item.name);
-            $('#result .metadata pre').html(JSON.stringify(result.item, null, '  '));
-            $('#result .metadata pre').show();
+    <h2>O365 CORS Sample</h2>
+    <label for="TxtOauthToken">OAuth Token: </label><input type="text" id="TxtOauthToken" size="80"/>
+    <br />
+    <label for="endpointUrl">Endpoint URL: </label><input type="text" id="endpoint" size="80" /> 
+    <br />
+    <input type="button" class="paddedElement" id="getToken" value="Get Token"> 
+    <input type="button" class="paddedElement" id="doCors" value="Make CORS Request" visibility="hidden" />
+    <br /> 
+    <br />
+    <label for="results" class="hidden paddedElement" id="resultHeading">Results: </label>
+    <br />
+    <label id="debugMessage"></label>
+    <pre id="results"></pre>
+    <script type="text/javascript"> 
+      (function (window) { 
+        var isCorsCompatible = function() {
+          try
+          {
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", getEndpointUrl());
+              xhr.setRequestHeader("authorization", "Bearer " + token);
+              xhr.setRequestHeader("accept", "application/json");
+              xhr.onload = function () {
+                 // CORS is working.
+                 console.log("Browser is CORS compatible."); 
+              }
+              xhr.send();
           }
-        });
-      }
-    </script>
-    <span id="browser-sync-binding"></span>
+          catch (e)
+          {
+              if (e.number == -2147024891)
+              {
+                  console.log("Internet Explorer users must use Internet Explorer 11 with MS15-032: Cumulative security update for Internet Explorer (KB3038314) installed for this sample to work.");
+              }
+              else
+              {
+                  console.log("An unexpected error occurred. Please refresh the page."); 
+              }
+
+          }
+        };
+
+        var urlParameterExtraction = new (function () { 
+          function splitQueryString(queryStringFormattedString) { 
+            var split = queryStringFormattedString.split('&'); 
+
+            // If there are no parameters in URL, do nothing.
+            if (split == "") {
+              return {};
+            } 
+
+            var results = {}; 
+
+            // If there are parameters in URL, extract key/value pairs. 
+            for (var i = 0; i < split.length; ++i) { 
+              var p = split[i].split('=', 2); 
+              if (p.length == 1) 
+                results[p[0]] = ""; 
+              else 
+                results[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " ")); 
+            } 
+
+            return results; 
+          } 
+
+          // Split the query string (after removing preceding '#'). 
+          this.queryStringParameters = splitQueryString(window.location.hash.substr(1)); 
+        })(); 
+
+        var token = urlParameterExtraction.queryStringParameters['access_token']; 
+
+        if (token == undefined) {
+          document.getElementById("TxtOauthToken").value = "Click \"Get Token\" to trigger sign-in after entering the endpoint you want to use."; 
+
+          document.getElementById("doCors").style.visibility = "hidden"; 
+        }
+        else {
+          document.getElementById("TxtOauthToken").value = token;
+          document.getElementById("doCors").style.visibility = "visible"; 
+          document.getElementById("getToken").style.display = "none"; 
+        }
+
+        // Constructs the authentication URL and directs the user to it. 
+        function requestToken() { 
+          // Change clientId and replyUrl to reflect your app's values 
+          // found on the Configure tab in the Azure Management Portal.
+          var clientId    = '45b92b9b-301e-4a83-9669-94477cdc8892';
+          var replyUrl    = 'https://tony-ren-dev.github.io/';
+          var resource    = "https://tonyren-my.sharepoint.com";
+
+          var authServer  = 'https://login.windows.net/common/oauth2/authorize?'; 
+          var endpointUrl = getEndpointUrl();
+
+          var responseType = 'token'; 
+
+          var url = authServer + 
+                    "response_type=" + encodeURI(responseType) + "&" + 
+                    "client_id=" + encodeURI(clientId) + "&" + 
+                    "resource=" + encodeURI(resource) + "&" + 
+                    "redirect_uri=" + encodeURI(replyUrl); 
+
+          window.location = url; 
+        } 
+
+        document.getElementById("getToken").onclick = requestToken; 
+
+        function getEndpointUrl() { 
+          return document.getElementById("endpoint").value; 
+        } 
+
+        function getFilesFromO365() { 
+          document.getElementById("results").textContent = ""; 
+
+          // Check browser compatbility. Check console output for details.
+          isCorsCompatible(); 
+
+          try 
+          { 
+            var xhr = new XMLHttpRequest(); 
+            xhr.open("GET", getEndpointUrl()); 
+
+            // The APIs require an OAuth access token in the Authorization header, formatted like this: 'Authorization: Bearer <token>'. 
+            xhr.setRequestHeader("Authorization", "Bearer " + token); 
+
+            // Process the response from the API.  
+            xhr.onload = function () { 
+              document.getElementById("resultHeading").style.visibility = "visible"; 
+
+              if (xhr.status == 200) { 
+                var formattedResponse = JSON.stringify(JSON.parse(xhr.response), undefined, 2);
+                document.getElementById("results").textContent = formattedResponse; 
+              } else { 
+                document.getElementById("results").textContent = "HTTP " + xhr.status + "<br>" + xhr.response; 
+              } 
+            } 
+
+            // Make request.
+            xhr.send(); 
+          } 
+          catch (err) 
+          { 
+            document.getElementById("resultHeading").style.visibility = "visible"; 
+            document.getElementById("results").textContent = "Exception: " + err.message; 
+          } 
+        } 
+
+        document.getElementById("doCors").onclick = getFilesFromO365; 
+
+      })(window); 
+    </script> 
   </body>
 </html>
