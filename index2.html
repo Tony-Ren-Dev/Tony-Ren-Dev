@@ -180,6 +180,7 @@
                     console.log(xhr.readyState);
                     console.log(xhr.status);
                     xhr.onload = function(e){
+                      console.log(xhr.status);
                       console.log('done');
                     };
                     xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
