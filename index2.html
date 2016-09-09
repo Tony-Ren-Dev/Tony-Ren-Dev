@@ -179,7 +179,7 @@
                     
                     reader.onload = function (e) {
                       bdinputfile=e.target.result;
-                    console.log(e.target.result);
+                    //console.log(e.target.result);
                         //$('#blah').attr('src', e.target.result);
                     }
                     
@@ -189,7 +189,7 @@
     
     
             function Postfunc() {
-                console.log('Tre');
+                console.log(bdinputfile);
                 // var photo = document.getElementById("image-file");
                // var file = photo.files[0];
                // console.log("File name: " + file.fileName);
@@ -202,7 +202,7 @@
                     xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename.png:/content", true);//https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
                     xhr.setRequestHeader("accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", 'text/plain');
+                    //xhr.setRequestHeader("Content-Type", 'text/plain');
                     
                     console.log(xhr.readyState);
                     console.log(xhr.status);
@@ -211,7 +211,7 @@
                       console.log('done');
                     };
                     var bd={"name": "FolderA","folder": { }};
-                    xhr.send(bd);
+                    xhr.send(bdinputfile);
 
                     //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
                     // https://tonyren-my.sharepoint.com/_api/v1.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47
