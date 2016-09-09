@@ -3,6 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
     <title>O365 CORS Sample</title>
     <style>
         body {
@@ -187,7 +188,7 @@
                 }
             }
     
-    
+            
             function Postfunc() {
                 console.log(bdinputfile);
                 // var photo = document.getElementById("image-file");
@@ -198,20 +199,35 @@
     
                 try {
                     
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename.png:/content",  false);//https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                    xhr.setRequestHeader("accept", "application/json");
-                    //xhr.setRequestHeader("Content-Type", 'text/plain');
                     
-                    console.log(xhr.readyState);
-                    console.log(xhr.status);
+                     jQuery.ajax({
+                        url: "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename.png:/content",
+                        type: 'PUT',
+                        data:bdinputfile,
+                        beforeSend: function beforeSend(xhr) {
+                          xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                        },
+                        success: function success(data) {
+                           console.log(data);
+                        },
+                        error: function error(jqXHR, textStatus, errorThrown) {
+                          console.log(errorThrown);
+                        }
+                      });
+        
+        
+                    //var xhr = new XMLHttpRequest();
+                    //xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename.png:/content",  false);//https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content
+                    //xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    //xhr.setRequestHeader("accept", "application/json");
+                    //xhr.setRequestHeader("Content-Type", 'text/plain');//console.log(xhr.readyState);
+                    //console.log(xhr.status);
                     //xhr.onload = function(e){
                     //  console.log(xhr.status);
                     //  console.log('done');
                    // };
                     //var bd={"name": "FolderA","folder": { }};
-                    xhr.send(bdinputfile);
+                   // xhr.send(bdinputfile);
 
                     //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
                     // https://tonyren-my.sharepoint.com/_api/v1.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47
@@ -219,7 +235,7 @@
                     //var OneDriveForBusinessEndPointURl = https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test
 
                     //var FileName = fileInput.files[0]; 
-                    xhr.send();
+                    /xhr.send();
 
                 } catch (e) {
                     console.log(e);
