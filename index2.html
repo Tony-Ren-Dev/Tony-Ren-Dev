@@ -18,7 +18,8 @@
     </style>
   </head>
   <body>
-    <h2>O365 CORS Sample</h2>
+    <h2>O365 CORS Sample</h2> 
+<button type="button" onclick="Postfunc();">POST</button>
     <label for="TxtOauthToken">OAuth Token: </label><input type="text" id="TxtOauthToken" size="80"/>
     <br />
     <label for="endpointUrl">Endpoint URL: </label><input type="text" id="endpoint" size="80" /> 
@@ -32,6 +33,9 @@
     <label id="debugMessage"></label>
     <pre id="results"></pre>
     <script type="text/javascript"> 
+    function Postfunc(){
+      console.log('Tre');
+    }
     // https://msdn.microsoft.com/en-us/office/office365/howto/create-web-apps-using-cors-to-access-files-in-office-365
       (function (window) { 
         var isCorsCompatible = function() {
