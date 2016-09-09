@@ -1,212 +1,203 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>O365 CORS Sample</title>
-    <style> 
-      body { 
-        font-family:'Segoe UI'; 
-      } 
-
-      .paddedElement {
-        margin-top: 5px; 
-      }
-
-      .hidden {
-        visibility: hidden; 
-      }
+    <style>
+        body {
+            font-family: 'Segoe UI';
+        }
+        
+        .paddedElement {
+            margin-top: 5px;
+        }
+        
+        .hidden {
+            visibility: hidden;
+        }
     </style>
-  </head>
-  <body>
-    <h2>O365 CORS Sample</h2> 
-<button type="button" onclick="Postfunc();" id="POSTID" >POST</button>
+</head>
+
+<body>
+    <h2>O365 CORS Sample</h2>
+    <button type="button" onclick="Postfunc();" id="POSTID">POST</button>
 
 
-    <label for="TxtOauthToken">OAuth Token: </label><input type="text" id="TxtOauthToken" size="80"/>
+    <label for="TxtOauthToken">OAuth Token: </label><input type="text" id="TxtOauthToken" size="80" />
     <br />
-    <label for="endpointUrl">Endpoint URL: </label><input type="text" id="endpoint" size="80" /> 
+    <label for="endpointUrl">Endpoint URL: </label><input type="text" id="endpoint" size="80" />
     <br />
-    <input type="button" class="paddedElement" id="getToken" value="Get Token"> 
+    <input type="button" class="paddedElement" id="getToken" value="Get Token">
     <input type="button" class="paddedElement" id="doCors" value="Make CORS Request" visibility="hidden" />
-    <br /> 
+    <br />
     <br />
     <label for="results" class="hidden paddedElement" id="resultHeading">Results: </label>
     <br />
     <label id="debugMessage"></label>
     <pre id="results"></pre>
-    <script type="text/javascript"> 
-    
-   
-    
-    
-    
-    // https://msdn.microsoft.com/en-us/office/office365/howto/create-web-apps-using-cors-to-access-files-in-office-365
-      (function (window) { 
-        var isCorsCompatible = function() {
-          try
-          {
-              var xhr = new XMLHttpRequest();
-              xhr.open("GET", getEndpointUrl());
-              xhr.setRequestHeader("authorization", "Bearer " + token);
-              xhr.setRequestHeader("accept", "application/json");
-              xhr.onload = function () {
-                 // CORS is working.
-                 console.log("Browser is CORS compatible."); 
-              }
-              xhr.send();
-          }
-          catch (e)
-          {
-              if (e.number == -2147024891)
-              {
-                  console.log("Internet Explorer users must use Internet Explorer 11 with MS15-032: Cumulative security update for Internet Explorer (KB3038314) installed for this sample to work.");
-              }
-              else
-              {
-                  console.log("An unexpected error occurred. Please refresh the page."); 
-              }
+    <script type="text/javascript">
+        // https://msdn.microsoft.com/en-us/office/office365/howto/create-web-apps-using-cors-to-access-files-in-office-365
+        (function(window) {
+            var isCorsCompatible = function() {
+                try {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", getEndpointUrl());
+                    xhr.setRequestHeader("authorization", "Bearer " + token);
+                    xhr.setRequestHeader("accept", "application/json");
+                    xhr.onload = function() {
+                        // CORS is working.
+                        console.log("Browser is CORS compatible.");
+                    }
+                    xhr.send();
+                } catch (e) {
+                    if (e.number == -2147024891) {
+                        console.log("Internet Explorer users must use Internet Explorer 11 with MS15-032: Cumulative security update for Internet Explorer (KB3038314) installed for this sample to work.");
+                    } else {
+                        console.log("An unexpected error occurred. Please refresh the page.");
+                    }
 
-          }
-        };
+                }
+            };
 
-        var urlParameterExtraction = new (function () { 
-          function splitQueryString(queryStringFormattedString) { 
-            var split = queryStringFormattedString.split('&'); 
+            var urlParameterExtraction = new(function() {
+                function splitQueryString(queryStringFormattedString) {
+                    var split = queryStringFormattedString.split('&');
 
-            // If there are no parameters in URL, do nothing.
-            if (split == "") {
-              return {};
-            } 
+                    // If there are no parameters in URL, do nothing.
+                    if (split == "") {
+                        return {};
+                    }
 
-            var results = {}; 
+                    var results = {};
 
-            // If there are parameters in URL, extract key/value pairs. 
-            for (var i = 0; i < split.length; ++i) { 
-              var p = split[i].split('=', 2); 
-              if (p.length == 1) 
-                results[p[0]] = ""; 
-              else 
-                results[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " ")); 
-            } 
+                    // If there are parameters in URL, extract key/value pairs. 
+                    for (var i = 0; i < split.length; ++i) {
+                        var p = split[i].split('=', 2);
+                        if (p.length == 1)
+                            results[p[0]] = "";
+                        else
+                            results[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                    }
 
-            return results; 
-          } 
+                    return results;
+                }
 
-          // Split the query string (after removing preceding '#'). 
-          this.queryStringParameters = splitQueryString(window.location.hash.substr(1)); 
-        })(); 
+                // Split the query string (after removing preceding '#'). 
+                this.queryStringParameters = splitQueryString(window.location.hash.substr(1));
+            })();
 
-        var token = urlParameterExtraction.queryStringParameters['access_token']; 
+            var token = urlParameterExtraction.queryStringParameters['access_token'];
 
-        if (token == undefined) {
-          document.getElementById("TxtOauthToken").value = "Click \"Get Token\" to trigger sign-in after entering the endpoint you want to use."; 
+            if (token == undefined) {
+                document.getElementById("TxtOauthToken").value = "Click \"Get Token\" to trigger sign-in after entering the endpoint you want to use.";
 
-          document.getElementById("doCors").style.visibility = "hidden"; 
-        }
-        else {
-          document.getElementById("TxtOauthToken").value = token;
-          document.getElementById("doCors").style.visibility = "visible"; 
-          document.getElementById("getToken").style.display = "none"; 
-        }
+                document.getElementById("doCors").style.visibility = "hidden";
+            } else {
+                document.getElementById("TxtOauthToken").value = token;
+                document.getElementById("doCors").style.visibility = "visible";
+                document.getElementById("getToken").style.display = "none";
+            }
 
-        // Constructs the authentication URL and directs the user to it. 
-        function requestToken() {
-          
-          // Change clientId and replyUrl to reflect your app's values 
-          // found on the Configure tab in the Azure Management Portal.
-          var clientId    = '45b92b9b-301e-4a83-9669-94477cdc8892';
-          var replyUrl    = 'https://tony-ren-dev.github.io/index2.html';//https://tony-ren-dev.github.io/index2.html  https://tony-ren-dev.github.io/
-          var resource    = "https://tonyren-my.sharepoint.com";
+            // Constructs the authentication URL and directs the user to it. 
+            function requestToken() {
 
-          var authServer  = 'https://login.windows.net/common/oauth2/authorize?'; 
-          var endpointUrl = getEndpointUrl();
-          //'https://tonyren-my.sharepoint.com/_api/v1.0/me/files'; 
-          //https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root/children?expand=thumbnails
+                // Change clientId and replyUrl to reflect your app's values 
+                // found on the Configure tab in the Azure Management Portal.
+                var clientId = '45b92b9b-301e-4a83-9669-94477cdc8892';
+                var replyUrl = 'https://tony-ren-dev.github.io/index2.html'; //https://tony-ren-dev.github.io/index2.html  https://tony-ren-dev.github.io/
+                var resource = "https://tonyren-my.sharepoint.com";
 
-          var responseType = 'token'; 
+                var authServer = 'https://login.windows.net/common/oauth2/authorize?';
+                var endpointUrl = getEndpointUrl();
+                //'https://tonyren-my.sharepoint.com/_api/v1.0/me/files'; 
+                //https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root/children?expand=thumbnails
 
-          var url = authServer + 
-                    "response_type=" + encodeURI(responseType) + "&" + 
-                    "client_id=" + encodeURI(clientId) + "&" + 
-                    "resource=" + encodeURI(resource) + "&" + 
-                    "redirect_uri=" + encodeURI(replyUrl); 
+                var responseType = 'token';
 
-          window.location = url; 
-        } 
+                var url = authServer +
+                    "response_type=" + encodeURI(responseType) + "&" +
+                    "client_id=" + encodeURI(clientId) + "&" +
+                    "resource=" + encodeURI(resource) + "&" +
+                    "redirect_uri=" + encodeURI(replyUrl);
 
-        document.getElementById("getToken").onclick = requestToken; 
+                window.location = url;
+            }
 
-        function getEndpointUrl() { 
-          return document.getElementById("endpoint").value; 
-        } 
+            document.getElementById("getToken").onclick = requestToken;
 
-        function getFilesFromO365() { 
-          document.getElementById("results").textContent = ""; 
+            function getEndpointUrl() {
+                return document.getElementById("endpoint").value;
+            }
 
-          // Check browser compatbility. Check console output for details.
-          isCorsCompatible(); 
+            function getFilesFromO365() {
+                document.getElementById("results").textContent = "";
 
-          try 
-          { 
-            var xhr = new XMLHttpRequest(); 
-            xhr.open("GET", getEndpointUrl()); 
+                // Check browser compatbility. Check console output for details.
+                isCorsCompatible();
 
-            // The APIs require an OAuth access token in the Authorization header, formatted like this: 'Authorization: Bearer <token>'. 
-            xhr.setRequestHeader("Authorization", "Bearer " + token); 
+                try {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", getEndpointUrl());
 
-            // Process the response from the API.  
-            xhr.onload = function () { 
-              document.getElementById("resultHeading").style.visibility = "visible"; 
+                    // The APIs require an OAuth access token in the Authorization header, formatted like this: 'Authorization: Bearer <token>'. 
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
 
-              if (xhr.status == 200) { 
-                var formattedResponse = JSON.stringify(JSON.parse(xhr.response), undefined, 2);
-                document.getElementById("results").textContent = formattedResponse; 
-              } else { 
-                document.getElementById("results").textContent = "HTTP " + xhr.status + "<br>" + xhr.response; 
-              } 
-            } 
+                    // Process the response from the API.  
+                    xhr.onload = function() {
+                        document.getElementById("resultHeading").style.visibility = "visible";
 
-            // Make request.
-            xhr.send(); 
-          } 
-          catch (err) 
-          { 
-            document.getElementById("resultHeading").style.visibility = "visible"; 
-            document.getElementById("results").textContent = "Exception: " + err.message; 
-          } 
-        } 
+                        if (xhr.status == 200) {
+                            var formattedResponse = JSON.stringify(JSON.parse(xhr.response), undefined, 2);
+                            document.getElementById("results").textContent = formattedResponse;
+                        } else {
+                            document.getElementById("results").textContent = "HTTP " + xhr.status + "<br>" + xhr.response;
+                        }
+                    }
 
-        document.getElementById("doCors").onclick = getFilesFromO365; 
-        document.getElementById("POSTID").onclick = Postfunc; 
+                    // Make request.
+                    xhr.send();
+                } catch (err) {
+                    document.getElementById("resultHeading").style.visibility = "visible";
+                    document.getElementById("results").textContent = "Exception: " + err.message;
+                }
+            }
 
-        
-        function Postfunc(){
-        console.log('Tre');
-        try
-        {
-          console.log(token);
-          var xhr = new XMLHttpRequest();
-          xhr.open("PUT", "https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/ssssssssssssssssssssssssssssssssssssssssssss:/test", true);
-          xhr.setRequestHeader("Authorization", "Bearer " + token);
-          xhr.setRequestHeader("accept", "application/json");
-          xhr.setRequestHeader("Content-Type", 'text');
-          xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
-          
-          //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
-          
-          //var OneDriveForBusinessEndPointURl = https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test
-          
-          //var FileName = fileInput.files[0]; 
-          xhr.send();
-          
-          }catch (e)
-          {
-           console.log(e);
-          }
-        
-        }
+            document.getElementById("doCors").onclick = getFilesFromO365;
+            document.getElementById("POSTID").onclick = Postfunc;
 
-      })(window); 
-    </script> 
-  </body>
+
+            function Postfunc() {
+                console.log('Tre');
+                try {
+                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("PUT", "https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/ssssssssssssssssssssssssssssssssssssssssssss:/test", true);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    xhr.setRequestHeader("accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", 'text');
+                    
+                    console.log(xhr.readyState);
+                    console.log(xhr.status);
+                    xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
+
+                    //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
+
+                    //var OneDriveForBusinessEndPointURl = https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test
+
+                    //var FileName = fileInput.files[0]; 
+                    xhr.send();
+
+                } catch (e) {
+                    console.log(e);
+                }
+
+            }
+
+
+
+        })(window);
+    </script>
+</body>
+
 </html>
