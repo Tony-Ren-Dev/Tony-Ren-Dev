@@ -1,4 +1,4 @@
-var appInfo = { clientId: 'H1OW9ug864pPQ+dm9iyI0myGampP99GEoRPP5CLHgZg=', scopes: 'onedrive.readonly wl.signin', redirectUri: 'https://tony-ren-dev.github.io/callback.html'}
+var appInfo = { clientId: '45b92b9b-301e-4a83-9669-94477cdc8892', scopes: 'onedrive.readonly wl.signin', redirectUri: 'https://tony-ren-dev.github.io/callback.html'}
 var tmpResolve = null;
 
 function getToken() {
@@ -57,12 +57,16 @@ function onAuthenticated(token) {
 }
 
 function challengeForAuth() {
-  var url =
+  /*var url =
     "https://login.live.com/oauth20_authorize.srf" +
     "?client_id=" + appInfo.clientId +
     "&scope=" + encodeURIComponent(appInfo.scopes) +
     "&response_type=token" +
     "&redirect_uri=" + encodeURIComponent(appInfo.redirectUri);
+    */
+    var url="https://login.microsoftonline.com/common/oauth2/authorize?response_type=code&client_id="+appInfo.clientId+"&redirect_uri="+ encodeURIComponent(appInfo.redirectUri);
+    
+    console.log(url);
   popup(url);
 }
 
