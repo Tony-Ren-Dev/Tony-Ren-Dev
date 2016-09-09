@@ -1,4 +1,4 @@
-# File picker for OneDrive for Business
+# File picker for OneDrive & OneDrive for Business
 
 The OneDrive & OneDrive for Business file picker is a light JavaScript picker over the OneDrive REST API. It is designed to work with both OneDrive & OneDrive for Business and to have light dependencies. Check your [live demo](https://nuxeo.github.io/onedrive-file-picker/).
 

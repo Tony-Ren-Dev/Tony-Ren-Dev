@@ -1,9 +1,4 @@
 var appInfo = { clientId: '8b68c952-9dce-423f-a69b-79499a127735', scopes: 'onedrive.readonly wl.signin', redirectUri: 'https://tony-ren-dev.github.io/callback.html'}
-
-// clientId: '45b92b9b-301e-4a83-9669-94477cdc8892'
-
-
-
 var tmpResolve = null;
 
 function getToken() {
@@ -68,12 +63,6 @@ function challengeForAuth() {
     "&scope=" + encodeURIComponent(appInfo.scopes) +
     "&response_type=token" +
     "&redirect_uri=" + encodeURIComponent(appInfo.redirectUri);
-    
-    //var url="https://login.microsoftonline.com/common/oauth2/authorize?response_type=code&client_id="+appInfo.clientId+"&redirect_uri="+ encodeURIComponent(appInfo.redirectUri);
-    //https://login.microsoftonline.com/common/oauth2/authorize?response_type=code&client_id=45b92b9b-301e-4a83-9669-94477cdc8892&redirect_uri=https%3A%2F%2Ftony-ren-dev.github.io%2Fcallback.html
-    
-    
-    
   popup(url);
 }
 
