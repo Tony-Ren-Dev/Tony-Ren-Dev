@@ -19,7 +19,9 @@
   </head>
   <body>
     <h2>O365 CORS Sample</h2> 
-<button type="button" onclick="Postfunc();">POST</button>
+<button type="button" onclick="Postfunc();" id="POSTID" >POST</button>
+
+
     <label for="TxtOauthToken">OAuth Token: </label><input type="text" id="TxtOauthToken" size="80"/>
     <br />
     <label for="endpointUrl">Endpoint URL: </label><input type="text" id="endpoint" size="80" /> 
@@ -34,31 +36,7 @@
     <pre id="results"></pre>
     <script type="text/javascript"> 
     
-    function Postfunc(){
-      console.log('Tre');
-      try
-      {
-        console.log(token);
-        var xhr = new XMLHttpRequest();
-        xhr.open("PUT", "https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test", true);
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-        xhr.setRequestHeader("accept", "application/json");
-        xhr.setRequestHeader("Content-Type", 'text');
-        xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
-        
-        //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
    
-        //var OneDriveForBusinessEndPointURl = https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test
-
-        var FileName = fileInput.files[0]; 
-        xhr.send();
-        
-         }catch (e)
-        {
-           console.log(e);
-        }
-
-    }
     
     
     
@@ -199,6 +177,34 @@
         } 
 
         document.getElementById("doCors").onclick = getFilesFromO365; 
+        document.getElementById("POSTID").onclick = Postfunc; 
+
+        
+        function Postfunc(){
+        console.log('Tre');
+        try
+        {
+          console.log(token);
+          var xhr = new XMLHttpRequest();
+          xhr.open("PUT", "https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test", true);
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
+          xhr.setRequestHeader("accept", "application/json");
+          xhr.setRequestHeader("Content-Type", 'text');
+          xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
+          
+          //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
+          
+          //var OneDriveForBusinessEndPointURl = https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test
+          
+          var FileName = fileInput.files[0]; 
+          xhr.send();
+          
+          }catch (e)
+          {
+           console.log(e);
+          }
+        
+        }
 
       })(window); 
     </script> 
