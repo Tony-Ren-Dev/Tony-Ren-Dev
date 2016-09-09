@@ -1170,6 +1170,7 @@ var Api = function () {
    */
 
   function Api(options) {
+    console.log('enter Api function ');
     _classCallCheck(this, Api);
 
     this._baseURL = options.baseURL;
@@ -1198,6 +1199,7 @@ var Api = function () {
       var _this = this;
 
       return new _promise2.default(function (resolve, reject) {
+        console.log(_this._baseURL + path);
         jQuery.ajax({
           url: _this._baseURL + path,
           type: 'GET',
