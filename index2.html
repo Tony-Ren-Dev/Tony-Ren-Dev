@@ -146,7 +146,7 @@
                     // Process the response from the API.  
                     xhr.onload = function() {
                         document.getElementById("resultHeading").style.visibility = "visible";
-
+                        console.log('Status:     '+xhr.status);
                         if (xhr.status == 200) {
                             var formattedResponse = JSON.stringify(JSON.parse(xhr.response), undefined, 2);
                             document.getElementById("results").textContent = formattedResponse;
