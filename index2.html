@@ -205,6 +205,7 @@
                      jQuery.ajax({
                         url: "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilenameio.txt:/content",
                         type: 'PUT',
+                        processData: false,
                         data: fd,//fetch(bdinputfile).then(res => res.blob()),
                         beforeSend: function beforeSend(xhr) {
                           xhr.setRequestHeader('Authorization', 'Bearer ' + token);
