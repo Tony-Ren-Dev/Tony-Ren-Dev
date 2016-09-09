@@ -1,6 +1,6 @@
 var appInfo = { clientId: '45b92b9b-301e-4a83-9669-94477cdc8892', scopes: 'onedrive.readonly wl.signin', redirectUri: 'https://mycanvastristatedemo.herokuapp.com/callback.html'}
 
-// clientId: '45b92b9b-301e-4a83-9669-94477cdc8892'  8b68c952-9dce-423f-a69b-79499a127735
+// Tony Test clientId: '45b92b9b-301e-4a83-9669-94477cdc8892'  8b68c952-9dce-423f-a69b-79499a127735
 
 
 
