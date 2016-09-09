@@ -83,7 +83,7 @@ function challengeForAuth() {
                   "response_type=" + encodeURI(responseType) + "&" + 
                   "client_id=" + encodeURI(appInfo.clientId) + "&" + 
                   "resource=" + encodeURI(resource) + "&" + 
-                  "redirect_uri=" + encodeURI(replyUrl); 
+                  "redirect_uri=" + encodeURI(appInfo.redirectUri); 
 
     
   popup(url);
