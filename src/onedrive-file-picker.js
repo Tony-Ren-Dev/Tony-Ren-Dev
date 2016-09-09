@@ -1647,7 +1647,7 @@ var ONEDRIVE_FILE_PICKER_ID = 'onedrive-file-picker';
 var DEFAULT_OPTS = {
   id: ONEDRIVE_FILE_PICKER_ID,
   // For OneDrive for Business put your resource endpoint here: https://{tenant}-my.sharepoint.com/_api/v2.0
-  baseURL: 'https://api.onedrive.com/v1.0',
+  baseURL: 'https://tonyren-my.sharepoint.com/_api/v2.0',//'https://api.onedrive.com/v1.0',
   accessToken: null
 };
 
