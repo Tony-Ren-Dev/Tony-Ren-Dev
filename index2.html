@@ -165,8 +165,14 @@
 
             document.getElementById("doCors").onclick = getFilesFromO365;
             document.getElementById("POSTID").onclick = Postfunc;
+             document.getElementById("POSTID").onchange=changeFile;
 
 
+            function changeFile(){
+              console.log('222');
+            }
+            
+            
             function Postfunc() {
                 console.log('Tre');
                 // var photo = document.getElementById("image-file");
@@ -178,7 +184,7 @@
                 try {
                     
                     var xhr = new XMLHttpRequest();
-                    xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/items/016EQYPSTZWXM7WK3S2RE3I4FGD4GQX5DS/children", true);//https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content
+                    xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilename.png:/content", true);//https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
                     xhr.setRequestHeader("accept", "application/json");
                     xhr.setRequestHeader("Content-Type", 'text/plain');
