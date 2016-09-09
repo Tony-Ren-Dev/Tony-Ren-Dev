@@ -178,7 +178,7 @@
                 try {
                     
                     var xhr = new XMLHttpRequest();
-                    xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content", true);
+                    xhr.open("PUT", "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/items/016EQYPSTZWXM7WK3S2RE3I4FGD4GQX5DS/children", true);//https://tonyren-my.sharepoint.com/_api/v2.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47/content
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
                     xhr.setRequestHeader("accept", "application/json");
                     xhr.setRequestHeader("Content-Type", 'text/plain');
@@ -189,7 +189,8 @@
                       console.log(xhr.status);
                       console.log('done');
                     };
-                    xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
+                    var bd={"name": "FolderA","folder": { }};
+                    xhr.send(bd);
 
                     //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
                     // https://tonyren-my.sharepoint.com/_api/v1.0/me/files/016EQYPSQMQ2RHKOLYIRA34XG2DP4LXF47
