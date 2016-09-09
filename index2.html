@@ -33,9 +33,35 @@
     <label id="debugMessage"></label>
     <pre id="results"></pre>
     <script type="text/javascript"> 
+    
     function Postfunc(){
       console.log('Tre');
+      try
+      {
+        console.log(token);
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test", true);
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+        xhr.setRequestHeader("accept", "application/json");
+        xhr.setRequestHeader("Content-Type", 'text');
+        xhr.send('ssssssssssssssssssssssssssssssssssssssssssss');
+        
+        //"b!G_EhQEbxTUqGqvaV2OQ1RPbH5sNOGNFPn25tNWyJkkhkEh3-auIYSopM5F-m8QbS",
+   
+        //var OneDriveForBusinessEndPointURl = https://tonyren-mysharepoint.com/_api/v2.0/drives/01KLNUCYQ36EQUARXRJVFINKXWSXMOINKE/items/016EQYPSV6Y2GOVW7725BZO354PWSELRRZ:/FileName:/test
+
+        var FileName = fileInput.files[0]; 
+        xhr.send();
+        
+         }catch (e)
+        {
+           console.log(e);
+        }
+
     }
+    
+    
+    
     // https://msdn.microsoft.com/en-us/office/office365/howto/create-web-apps-using-cors-to-access-files-in-office-365
       (function (window) { 
         var isCorsCompatible = function() {
