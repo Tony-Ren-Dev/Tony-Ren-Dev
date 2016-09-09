@@ -199,11 +199,13 @@
     
                 try {
                     
-                    
+                    var fd = new FormData();    
+                    fd.append( 'file', document.getElementById("image-file").files[0] );
+
                      jQuery.ajax({
                         url: "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilenameio.txt:/content",
                         type: 'PUT',
-                        data: document.getElementById("image-file").files[0],//fetch(bdinputfile).then(res => res.blob()),
+                        data: fd,//fetch(bdinputfile).then(res => res.blob()),
                         beforeSend: function beforeSend(xhr) {
                           xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                         },
