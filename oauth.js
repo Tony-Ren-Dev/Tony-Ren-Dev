@@ -75,6 +75,17 @@ function challengeForAuth() {
     
     var url="https://login.microsoftonline.com/common/oauth2/authorize?response_type=code&client_id=45b92b9b-301e-4a83-9669-94477cdc8892&redirect_uri=https%3A%2F%2Ftony-ren-dev.github.io%2Fcallback.html";
     
+   var responseType = 'token';
+   var replyUrl    = 'https://tony-ren-dev.github.io/index2.html';//https://tony-ren-dev.github.io/index2.html  https://tony-ren-dev.github.io/
+   var resource    = "https://tonyren-my.sharepoint.com";
+  var authServer  = 'https://login.windows.net/common/oauth2/authorize?'; 
+  var url = authServer + 
+                  "response_type=" + encodeURI(responseType) + "&" + 
+                  "client_id=" + encodeURI(appInfo.clientId) + "&" + 
+                  "resource=" + encodeURI(resource) + "&" + 
+                  "redirect_uri=" + encodeURI(replyUrl); 
+
+    
   popup(url);
 }
 
