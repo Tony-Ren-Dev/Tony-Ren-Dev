@@ -211,7 +211,7 @@
                         url: "https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilenameio123a.png:/content",
                         type: 'PUT',
                         processData: false,
-                        data: fd,//fetch(bdinputfile).then(res => res.blob()),
+                        data:  document.getElementById('image-file').files[0],//fd,//fetch(bdinputfile).then(res => res.blob()),
                         beforeSend: function beforeSend(xhr) {
                           xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                         },
