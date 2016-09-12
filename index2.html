@@ -208,7 +208,7 @@
                     //console.log(fd);
                     var urlname="https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/"+document.getElementById('image-file').files[0].name+":/content";//"https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilenameio123a.png:/content"
                      jQuery.ajax({
-                        url: urlname,
+                        url: urlname, 
                         type: 'PUT',
                         processData: false,
                         data:  document.getElementById('image-file').files[0],//fd,//fetch(bdinputfile).then(res => res.blob()),
