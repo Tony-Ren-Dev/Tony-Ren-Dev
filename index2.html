@@ -178,9 +178,9 @@
                 try {
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root/children');
-                    xhr.setRequestHeader("content-type", "application/json");
-                    //xhr.setRequestHeader("accept", "application/json;odata=verbose");//xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    xhr.setRequestHeader("content-type", "application/json");//xhr.setRequestHeader("accept", "application/json;odata=verbose");//xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
+                    
 
                     // Process the response from the API.  
                     xhr.onload = function() {
