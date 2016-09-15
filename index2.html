@@ -142,7 +142,7 @@
                 try {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", getEndpointUrl());
-                    xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
+
                     // The APIs require an OAuth access token in the Authorization header, formatted like this: 'Authorization: Bearer <token>'. 
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
 
@@ -177,6 +177,7 @@
                 try {
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v1.0/me/files/');
+                     xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
 
                     // Process the response from the API.  
