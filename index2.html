@@ -173,7 +173,8 @@
 
 
             function PostMethod2() {
-
+                // Create a new folder in OneDrive   https://dev.onedrive.com/items/create.htm
+                // Using the OneDrive API in JavaScript apps (CORS support)  https://dev.onedrive.com/misc/working-with-cors.htm
                 try {
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v1.0/me/files/');
@@ -198,7 +199,7 @@
                         "folder": {}
                     };
                     // Make request.
-                    xhr.send(tempData);
+                    xhr.send( JSON.stringify(tempData));
                 } catch (err) {
                     console.log(err.message);
 
