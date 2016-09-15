@@ -194,8 +194,10 @@
                         }
                     }
 
+                     var foldertemp = new Object();
                     var tempData = {
-                        "name": "FolderA"
+                        "name": "FolderA",
+                        "folder":foldertemp
                     };
                     // Make request.
                     xhr.send( JSON.stringify(tempData));
