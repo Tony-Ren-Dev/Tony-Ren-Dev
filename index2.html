@@ -142,7 +142,7 @@
                 try {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", getEndpointUrl());
-
+                    xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
                     // The APIs require an OAuth access token in the Authorization header, formatted like this: 'Authorization: Bearer <token>'. 
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
 
