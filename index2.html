@@ -177,8 +177,9 @@
                 // Using the OneDrive API in JavaScript apps (CORS support)  https://dev.onedrive.com/misc/working-with-cors.htm
                 try {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v1.0/me/files/');
-                    xhr.setRequestHeader("accept", "application/json;odata=verbose");//xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
+                    xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root/children');
+                    xhr.setRequestHeader("content-type", "application/json");
+                    //xhr.setRequestHeader("accept", "application/json;odata=verbose");//xhr.setRequestHeader("content-type", "application/json"); // "accept": "application/json;odata=verbose"
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
 
                     // Process the response from the API.  
@@ -196,7 +197,7 @@
 
                      var foldertemp = new Object();
                     var tempData = {
-                        "name": "FolderA",
+                        "name": "FolderA123",
                         "folder":foldertemp
                     };
                     // Make request.
