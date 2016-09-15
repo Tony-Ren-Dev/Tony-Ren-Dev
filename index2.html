@@ -170,13 +170,13 @@
             document.getElementById("POSTID").onclick = Postfunc;
             document.getElementById("image-file").onchange = changeFile;
             document.getElementById("PostMethodID").onclick = PostMethod2;
-            
-            
-            function PostMethod2(){
-                
+
+
+            function PostMethod2() {
+
                 try {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v1.0/me/files/'); 
+                    xhr.open("POST", 'https://tonyren-my.sharepoint.com/_api/v1.0/me/files/');
                     xhr.setRequestHeader("Authorization", "Bearer " + token);
 
                     // Process the response from the API.  
@@ -184,26 +184,26 @@
                         console.log('Status:     ' + xhr.status);
                         if (xhr.status == 200) {
                             console.log('         status == 200      ');
-                           console.log(xhr.response);
+                            console.log(xhr.response);
                             console.log('------------------------');
                         } else {
                             console.log("HTTP " + xhr.status + "   ||   " + xhr.response);
-                            
+
                         }
                     }
 
                     var tempData = {
                         "name": "FolderA",
                         "folder": {}
-                    }; 
+                    };
                     // Make request.
                     xhr.send(tempData);
                 } catch (err) {
                     console.log(err.message);
-                    
+
                 }
-                
-                
+
+
             }
 
             function PostMethod() {
