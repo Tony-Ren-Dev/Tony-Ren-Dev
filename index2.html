@@ -176,11 +176,15 @@
                 
                 try {
                     //var urlname="https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/"+document.getElementById('image-file').files[0].name+":/content";//"https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilenameio123a.png:/content"
-                     var urlname='https://tonyren-my.sharepoint.com/_api/v1.0/me/files/'
-                     var tempData={"name": "FolderA","folder": { }}
+                     var urlname='https://tonyren-my.sharepoint.com/_api/v1.0/me/files/';
+                     var tempData={"name": "FolderA","folder": { }} ;//Content-Type: application/json
                      
                      jQuery.ajax({
                         url: urlname, 
+                        headers: { 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
                         type: 'Post',
                         processData: false,
                         data:  tempData,//fd,//fetch(bdinputfile).then(res => res.blob()),
