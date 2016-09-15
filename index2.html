@@ -22,7 +22,9 @@
 
 <body>
     <h2>O365 CORS Sample</h2>
-    <button type="button" onclick="Postfunc();" id="POSTID">POST</button><br/>
+     <button type="button" onclick="PostMethod();" id="PostMethodID">Post Method</button><br/>
+     
+    <button type="button" onclick="Postfunc();" id="POSTID">Upload</button><br/>
    <input id="image-file" type="file" /><br/>
 
     <label for="TxtOauthToken">OAuth Token: </label><input type="text" id="TxtOauthToken" size="80" />
@@ -167,8 +169,38 @@
             document.getElementById("doCors").onclick = getFilesFromO365;
             document.getElementById("POSTID").onclick = Postfunc;
              document.getElementById("image-file").onchange=changeFile;
+             document.getElementById("PostMethodID").onchange=PostMethod;
+             
 
-
+            function PostMethod(){
+                
+                try {
+                    //var urlname="https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/"+document.getElementById('image-file').files[0].name+":/content";//"https://tonyren-my.sharepoint.com/_api/v2.0/me/drive/root:/myFilenameio123a.png:/content"
+                     var urlname='https://tonyren-my.sharepoint.com/_api/v1.0/me/files/'
+                     var tempData={"name": "FolderA","folder": { }}
+                     
+                     jQuery.ajax({
+                        url: urlname, 
+                        type: 'Post',
+                        processData: false,
+                        data:  tempData,//fd,//fetch(bdinputfile).then(res => res.blob()),
+                        beforeSend: function beforeSend(xhr) {
+                          xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                        },
+                        success: function success(data) {
+                            console.log('OK');
+                           console.log(data);
+                        },
+                        error: function error(jqXHR, textStatus, errorThrown) {
+                          console.log(errorThrown);
+                        }
+                      });
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            
+            
             function changeFile(){
               console.log('222');
                readURL(this);
